@@ -14,7 +14,8 @@ const Login = (props) => {
     });
     let navigate = useNavigate();
     const handleLogin = async () => {
-        const response = await login(credentials.emailAddress, credentials.password);
+        try {
+            const response = await login(credentials.emailAddress, credentials.password);
         const data = await response.json();
         if(data.success){
             localStorage.setItem('authToken', data.message);
@@ -24,6 +25,10 @@ const Login = (props) => {
         else{
             props.showAlert(data.message,"danger");
         }
+        } catch (error) {
+            console.log(error);
+        }
+        
     }
     const clearAllFields = (e) =>{
         setCredentials({
